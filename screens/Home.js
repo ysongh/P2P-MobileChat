@@ -1,13 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from '@rneui/themed';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '@rneui/themed';
+import { Web3Modal, Web3Button } from '@web3modal/react-native';
+
+import { WALLETCONNECT_PROJECTID } from '../keys';
+
+const providerMetadata = {
+  name: 'YOUR_PROJECT_NAME',
+  description: 'YOUR_PROJECT_DESCRIPTION',
+  url: 'https://your-project-website.com/',
+  icons: ['https://your-project-logo.com/'],
+  redirect: {
+    native: 'YOUR_APP_SCHEME://',
+    universal: 'YOUR_APP_UNIVERSAL_LINK.com'
+  }
+};
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Text>P2P MobileChat</Text>
-      <Button title="Login" />
+      <Text
+        h1Style={{}}
+        h2Style={{}}
+        h3Style={{}}
+        h4
+        h4Style={{}}
+        style={{ marginBottom: 20}}
+      >
+        Welcome to P2P MobileChat
+      </Text>
+      <Web3Button />
+      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
     </View>
   );
