@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '@rneui/themed';
-import { Web3Modal, Web3Button, useWeb3Modal } from '@web3modal/react-native';
+import { Button, Text } from '@rneui/themed';
+import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
 
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -17,27 +16,10 @@ const providerMetadata = {
   }
 };
 
-const sessionParams = {
-  namespaces: {
-    eip155: {
-      methods: [
-        'eth_sendTransaction',
-        'personal_sign'
-      ],
-      chains: ['eip155:137'],
-      events: ['chainChanged', 'accountsChanged'],
-      rpcMap: {},
-    },
-  },
-};
 
-export default function Home({ navigation }) {
-  const { isConnected } = useWeb3Modal();
+export default function Dashboard() {
+  const { open, isConnected } = useWeb3Modal();
 
-  useEffect(() => {
-    if (isConnected) navigation.replace('Dashboard');
-  }, [isConnected])
-  
   return (
     <View style={styles.container}>
       <Text
@@ -48,10 +30,22 @@ export default function Home({ navigation }) {
         h4Style={{}}
         style={{ marginBottom: 20}}
       >
-        Welcome to P2P MobileChat
+        Dashboard
       </Text>
-      <Web3Button />
-      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} sessionParams={sessionParams} />
+      <Button
+        title={isConnected ? 'View Account' : 'Connect'}
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={open}
+      />
+      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
     </View>
   );
