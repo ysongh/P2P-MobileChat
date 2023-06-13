@@ -16,6 +16,20 @@ const providerMetadata = {
   }
 };
 
+const sessionParams = {
+  namespaces: {
+    eip155: {
+      methods: [
+        'eth_sendTransaction',
+        'personal_sign'
+      ],
+      chains: ['eip155:137'],
+      events: ['chainChanged', 'accountsChanged'],
+      rpcMap: {},
+    },
+  },
+};
+
 export default function Home() {
   return (
     <View style={styles.container}>
@@ -30,7 +44,7 @@ export default function Home() {
         Welcome to P2P MobileChat
       </Text>
       <Web3Button />
-      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
+      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} sessionParams={sessionParams} />
       <StatusBar style="auto" />
     </View>
   );
