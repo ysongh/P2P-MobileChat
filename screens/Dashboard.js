@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
 
+import { getChatsFromPB, addChatToPB } from '../utils/polybase';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 const providerMetadata = {
@@ -16,9 +18,12 @@ const providerMetadata = {
   }
 };
 
-
 export default function Dashboard() {
   const { open, isConnected } = useWeb3Modal();
+
+  useEffect(() => {
+    getChatsFromPB();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -44,6 +49,19 @@ export default function Dashboard() {
           marginVertical: 10,
         }}
         onPress={open}
+      />
+      <Button
+        title="Add Chat"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={() => addChatToPB("1", "0x0", "0x0", "Test")}
       />
       <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
