@@ -5,18 +5,8 @@ import { Button, Text } from '@rneui/themed';
 import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
 
 import { getChatsFromPB, addChatToPB } from '../utils/polybase';
+import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
-
-const providerMetadata = {
-  name: 'YOUR_PROJECT_NAME',
-  description: 'YOUR_PROJECT_DESCRIPTION',
-  url: 'https://your-project-website.com/',
-  icons: ['https://your-project-logo.com/'],
-  redirect: {
-    native: 'YOUR_APP_SCHEME://',
-    universal: 'YOUR_APP_UNIVERSAL_LINK.com'
-  }
-};
 
 export default function Dashboard({ navigation }) {
   const { open, isConnected } = useWeb3Modal();
