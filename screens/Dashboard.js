@@ -18,7 +18,7 @@ const providerMetadata = {
   }
 };
 
-export default function Dashboard() {
+export default function Dashboard({ navigation }) {
   const { open, isConnected } = useWeb3Modal();
 
   useEffect(() => {
@@ -49,6 +49,19 @@ export default function Dashboard() {
           marginVertical: 10,
         }}
         onPress={open}
+      />
+      <Button
+        title="Chat"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={() => navigation.navigate('Chat')}
       />
       <Button
         title="Add Chat"
