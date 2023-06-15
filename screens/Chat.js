@@ -14,7 +14,7 @@ export default function Chat() {
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    addChatToPB("2", "0x0", "0x0", input);
+    addChatToPB("3", "0x0", "0x0", input);
     setInput("");
   }
 
@@ -65,7 +65,7 @@ export default function Chat() {
             
           </ScrollView>
           <View style={styles.footer}>
-            <TextInput style={styles.textInput} value={input} onChange={(text) => setInput(text)} placeholder="msg..." />
+            <TextInput style={styles.textInput} value={input} onChangeText={(text) => setInput(text)} placeholder="msg..." />
             <TouchableOpacity onPress={sendMessage}>
               <Text>Send</Text>
             </TouchableOpacity>
