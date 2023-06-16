@@ -6,7 +6,9 @@ import { Avatar, Text } from '@rneui/themed';
 import { getChatsFromPB, addChatToPB } from '../utils/polybase';
 import { dateToUnixTime } from '../utils/date';
 
-export default function Chat() {
+export default function Chat({ route }) {
+  const { reciever, sender } = route.params;
+
   const [messages, seMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -22,7 +24,7 @@ export default function Chat() {
   const sendMessage = async() => {
     Keyboard.dismiss();
     const currentTime = await dateToUnixTime();
-    addChatToPB(currentTime.toString(), "0x1", "0x1", input);
+    addChatToPB(currentTime.toString(), reciever, sender, input);
     setInput("");
   }
 

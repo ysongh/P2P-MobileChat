@@ -41,7 +41,7 @@ export default function Dashboard({ navigation }) {
         onPress={open}
       />
       <Button
-        title="Chat"
+        title="Chat 0x0"
         buttonStyle={{
           backgroundColor: 'rgba(78, 116, 289, 1)',
           borderRadius: 3,
@@ -51,10 +51,10 @@ export default function Dashboard({ navigation }) {
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={() => navigation.navigate('Chat')}
+        onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )}
       />
       <Button
-        title="Add Chat"
+        title="Chat 0x1"
         buttonStyle={{
           backgroundColor: 'rgba(78, 116, 289, 1)',
           borderRadius: 3,
@@ -64,7 +64,7 @@ export default function Dashboard({ navigation }) {
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={() => addChatToPB("1", "0x0", "0x0", "Test")}
+        onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )}
       />
       <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
