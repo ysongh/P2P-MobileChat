@@ -4,6 +4,7 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, V
 import { Avatar, Text } from '@rneui/themed';
 
 import { getChatsFromPB, addChatToPB } from '../utils/polybase';
+import { dateToUnixTime } from '../utils/date';
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -12,9 +13,10 @@ export default function Chat() {
     getChatsFromPB();
   }, [])
 
-  const sendMessage = () => {
+  const sendMessage = async() => {
     Keyboard.dismiss();
-    addChatToPB("3", "0x0", "0x0", input);
+    const currentTime = await dateToUnixTime();
+    addChatToPB(currentTime.toString(), "0x0", "0x0", input);
     setInput("");
   }
 
