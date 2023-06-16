@@ -7,16 +7,22 @@ import { getChatsFromPB, addChatToPB } from '../utils/polybase';
 import { dateToUnixTime } from '../utils/date';
 
 export default function Chat() {
+  const [messages, seMessages] = useState([]);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    getChatsFromPB();
+    getChats();
   }, [])
+
+  const getChats = async () => {
+    const chats = await getChatsFromPB();
+    seMessages(chats);
+  }
 
   const sendMessage = async() => {
     Keyboard.dismiss();
     const currentTime = await dateToUnixTime();
-    addChatToPB(currentTime.toString(), "0x0", "0x0", input);
+    addChatToPB(currentTime.toString(), "0x1", "0x1", input);
     setInput("");
   }
 
@@ -31,40 +37,42 @@ export default function Chat() {
       >
         <>
           <ScrollView contentContainerStyle={{ paddingTop: 15 }}>
-            <View style={styles.reciever}>
-              <Avatar
-                rounded
-                position="absolute"
-                bottom={-15}
-                right={-5}
-                size={30}
-                title="Fc"
-                containerStyle={{
-                  position: "absolute",
-                  bottom: -15,
-                  right: -5,
-                  backgroundColor: "green"
-                }} />
-              <Text style={styles.recieverText}>Hi</Text>
-            </View>
-            <View style={styles.sender}>
-              <Avatar
-                rounded
-                position="absolute"
-                bottom={-15}
-                left={-5}
-                size={30}
-                title="CJ"
-                containerStyle={{
-                  position: "absolute",
-                  bottom: -15,
-                  left: -5,
-                  backgroundColor: "blue"
-                }} />
-              <Text style={styles.senderText}>Hi</Text>
-              <Text style={styles.senderName}>0x0</Text>
-            </View>
-            
+            {messages.map(m => (
+              m.data.from === "0x0"
+                ? <View style={styles.reciever} key={m.data.id}>
+                    <Avatar
+                      rounded
+                      position="absolute"
+                      bottom={-15}
+                      right={-5}
+                      size={30}
+                      title="Fc"
+                      containerStyle={{
+                        position: "absolute",
+                        bottom: -15,
+                        right: -5,
+                        backgroundColor: "green"
+                      }} />
+                    <Text style={styles.recieverText}>{m.data.text}</Text>
+                  </View>
+                : <View style={styles.sender} key={m.data.id}>
+                    <Avatar
+                      rounded
+                      position="absolute"
+                      bottom={-15}
+                      left={-5}
+                      size={30}
+                      title="CJ"
+                      containerStyle={{
+                        position: "absolute",
+                        bottom: -15,
+                        left: -5,
+                        backgroundColor: "blue"
+                      }} />
+                    <Text style={styles.senderText}>{m.data.text}</Text>
+                    <Text style={styles.senderName}>0x0</Text>
+                  </View>
+            ))}
           </ScrollView>
           <View style={styles.footer}>
             <TextInput style={styles.textInput} value={input} onChangeText={(text) => setInput(text)} placeholder="msg..." />

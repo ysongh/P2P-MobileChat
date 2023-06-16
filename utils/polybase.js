@@ -9,7 +9,6 @@ const db = new Polybase({
 export const getChatsFromPB = async () => {
   try{
     const data = await db.collection("Chat").get();
-    console.log(data);
     return data.data;
   } catch (error) {
     console.log(error);
