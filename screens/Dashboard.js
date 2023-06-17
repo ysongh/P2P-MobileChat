@@ -3,8 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
+import { ethers } from 'ethers';
 
-import { getChatsFromPB, addChatToPB } from '../utils/polybase';
+import { getChatsFromPB } from '../utils/polybase';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -13,7 +14,13 @@ export default function Dashboard({ navigation }) {
 
   useEffect(() => {
     getChatsFromPB();
+    getENS();
   }, [])
+
+  const getENS = async () => {
+    const wallet = ethers.Wallet.createRandom();
+    console.log('Wallet address:', wallet.address);
+  }
 
   return (
     <View style={styles.container}>
