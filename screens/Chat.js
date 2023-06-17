@@ -3,23 +3,29 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { Avatar, Text } from '@rneui/themed';
 
-import { getChatsFromPB, addChatToPB } from '../utils/polybase';
+import { addChatToPB, db } from '../utils/polybase';
 import { dateToUnixTime } from '../utils/date';
 
 export default function Chat({ route }) {
   const { reciever, sender } = route.params;
 
-  const [messages, seMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    getChats();
+    db
+      .collection("Chat")
+      .onSnapshot(
+        (newDoc) => {
+          // Handle the change
+          setMessages(newDoc.data);
+        },
+        (err) => {
+          // Optional error handler
+          console.error(err);
+        }
+      );
   }, [])
-
-  const getChats = async () => {
-    const chats = await getChatsFromPB();
-    seMessages(chats);
-  }
 
   const sendMessage = async() => {
     Keyboard.dismiss();

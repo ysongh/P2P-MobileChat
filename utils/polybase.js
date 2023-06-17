@@ -2,7 +2,7 @@ import { Polybase } from "@polybase/client";
 
 import { POLYBASE_NAMESPACE } from "../keys";
 
-const db = new Polybase({
+export const db = new Polybase({
   defaultNamespace: POLYBASE_NAMESPACE
 });
 
