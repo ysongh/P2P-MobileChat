@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Button, Text } from '@rneui/themed';
+import { Button, Input } from '@rneui/themed';
 import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
 import { ethers } from 'ethers';
 
@@ -12,9 +12,10 @@ import { WALLETCONNECT_PROJECTID } from '../keys';
 export default function Dashboard({ navigation }) {
   const { open, isConnected } = useWeb3Modal();
 
+  const [input, setInput] = useState("");
+
   useEffect(() => {
     getChatsFromPB();
-    getENS();
   }, [])
 
   const getENS = async () => {
@@ -24,16 +25,10 @@ export default function Dashboard({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text
-        h1Style={{}}
-        h2Style={{}}
-        h3Style={{}}
-        h4
-        h4Style={{}}
-        style={{ marginBottom: 20}}
-      >
-        Dashboard
-      </Text>
+      <Input 
+        placeholder="Enter Address"
+        value={input}
+        onChangeText={(text) => setInput(text)} />
       <Button
         title={isConnected ? 'View Account' : 'Connect'}
         buttonStyle={{
@@ -81,7 +76,6 @@ export default function Dashboard({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
