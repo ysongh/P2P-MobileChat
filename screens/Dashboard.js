@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from '@rneui/themed';
-import { Web3Modal, useWeb3Modal } from '@web3modal/react-native';
+import { Web3Modal, useWeb3Modal } from '@walletconnect/modal-react-native';
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
