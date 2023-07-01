@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '@rneui/themed';
-import { WalletConnectModal } from '@walletconnect/modal-react-native';
+import { Button, Text } from '@rneui/themed';
+import { WalletConnectModal, useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { providerMetadata, sessionParams } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Home({ navigation }) {
+  const { open, isConnected } = useWalletConnectModal();
+
+  useEffect(() => {
+    if (isConnected) navigation.replace('Home');
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text
@@ -20,6 +26,19 @@ export default function Home({ navigation }) {
       >
         Welcome to P2P MobileChat
       </Text>
+      <Button
+        title={isConnected ? 'View Account' : 'Connect'}
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={open}
+      />
       <WalletConnectModal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
     </View>
