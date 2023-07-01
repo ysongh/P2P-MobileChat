@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
   const { open, isConnected } = useWalletConnectModal();
 
   useEffect(() => {
-    if (isConnected) navigation.replace('Home');
+    if (isConnected) navigation.replace('Dashboard');
   }, [])
 
   return (
@@ -38,6 +38,19 @@ export default function Home({ navigation }) {
           marginVertical: 10,
         }}
         onPress={open}
+      />
+       <Button
+        title="Dashboard"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={() => navigation.navigate("Dashboard")}
       />
       <WalletConnectModal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />

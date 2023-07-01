@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from '@rneui/themed';
-import { Web3Modal, useWeb3Modal } from '@walletconnect/modal-react-native';
+import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-native';
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
@@ -10,7 +10,7 @@ import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Dashboard({ navigation }) {
-  const { open, isConnected } = useWeb3Modal();
+  const { open, isConnected } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
 
@@ -29,19 +29,6 @@ export default function Dashboard({ navigation }) {
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
-      <Button
-        title={isConnected ? 'View Account' : 'Connect'}
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={open}
-      />
       <Button
         title="Chat 0x0"
         buttonStyle={{
@@ -68,7 +55,6 @@ export default function Dashboard({ navigation }) {
         }}
         onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )}
       />
-      <Web3Modal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
       <StatusBar style="auto" />
     </View>
   );
