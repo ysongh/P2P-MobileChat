@@ -11,8 +11,8 @@ export default function Home({ navigation }) {
   const { open, isConnected } = useWalletConnectModal();
 
   useEffect(() => {
-    if (isConnected) navigation.replace('Dashboard');
-  }, [])
+    if (isConnected) navigation.navigate('Dashboard');
+  }, [isConnected])
 
   return (
     <View style={styles.container}>
