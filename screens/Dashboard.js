@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Button, Input } from '@rneui/themed';
+import { Button, Input, Text } from '@rneui/themed';
 import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-native';
 import { ethers } from 'ethers';
 
@@ -10,7 +10,7 @@ import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Dashboard({ navigation }) {
-  const { open, isConnected } = useWalletConnectModal();
+  const { address } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
 
@@ -25,6 +25,7 @@ export default function Dashboard({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.address}>{address}</Text>
       <Input 
         placeholder="Enter Address"
         value={input}
@@ -66,4 +67,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  address: {
+    marginTop: 15,
+    marginBottom: 20
+  }
 });
