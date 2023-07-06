@@ -8,11 +8,18 @@ import { providerMetadata, sessionParams } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Home({ navigation }) {
-  const { open, isConnected } = useWalletConnectModal();
+  const { open, provider, isConnected } = useWalletConnectModal();
 
   useEffect(() => {
     if (isConnected) navigation.navigate('Dashboard');
   }, [isConnected])
+
+  const logout = async () => {
+    if (isConnected) {
+      return provider?.disconnect();
+    }
+    return open();
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +34,7 @@ export default function Home({ navigation }) {
         Welcome to P2P MobileChat
       </Text>
       <Button
-        title={isConnected ? 'View Account' : 'Connect'}
+        title={isConnected ? 'Logout' : 'Connect'}
         buttonStyle={{
           backgroundColor: 'rgba(78, 116, 289, 1)',
           borderRadius: 3,
@@ -37,7 +44,7 @@ export default function Home({ navigation }) {
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={open}
+        onPress={logout}
       />
        <Button
         title="Dashboard"
@@ -52,7 +59,11 @@ export default function Home({ navigation }) {
         }}
         onPress={() => navigation.navigate("Dashboard")}
       />
-      <WalletConnectModal projectId={WALLETCONNECT_PROJECTID} providerMetadata={providerMetadata} />
+      <WalletConnectModal
+        projectId={WALLETCONNECT_PROJECTID}
+        providerMetadata={providerMetadata}
+        sessionParams={sessionParams}
+      />
       <StatusBar style="auto" />
     </View>
   );

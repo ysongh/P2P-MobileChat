@@ -14,9 +14,12 @@ export const sessionParams = {
     eip155: {
       methods: [
         'eth_sendTransaction',
-        'personal_sign'
+        'eth_signTransaction',
+        'eth_sign',
+        'personal_sign',
+        'eth_signTypedData',
       ],
-      chains: ['eip155:137'],
+      chains: ['eip155:80001'],
       events: ['chainChanged', 'accountsChanged'],
       rpcMap: {},
     },
