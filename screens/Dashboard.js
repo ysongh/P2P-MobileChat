@@ -6,7 +6,7 @@ import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-nat
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { initializingSuperfluid } from '../utils/superfluid';
+import { initializingSuperfluid, getfDAIxBalance } from '../utils/superfluid';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -14,14 +14,20 @@ export default function Dashboard({ navigation }) {
   const { address, provider } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
+  const [fdaixbalance, setFdaixbalance] = useState(0);
 
   useEffect(() => {
     getChatsFromPB();
   }, [])
 
   useEffect(() => {
-    if(provider) initializingSuperfluid(provider);
+    if(provider) getfDAIx();
   }, [provider])
+
+  const getfDAIx = async() => {
+    const balance = await getfDAIxBalance(provider, address);
+    setFdaixbalance(balance.toString());
+  }
 
   const getENS = async () => {
     const wallet = ethers.Wallet.createRandom();
@@ -31,6 +37,7 @@ export default function Dashboard({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.address}>{address}</Text>
+      <Text>{fdaixbalance} FDAI</Text>
       <Input 
         placeholder="Enter Address"
         value={input}
