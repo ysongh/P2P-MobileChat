@@ -6,17 +6,22 @@ import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-nat
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
+import { initializingSuperfluid } from '../utils/superfluid';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Dashboard({ navigation }) {
-  const { address } = useWalletConnectModal();
+  const { address, provider } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
 
   useEffect(() => {
     getChatsFromPB();
   }, [])
+
+  useEffect(() => {
+    if(provider) initializingSuperfluid(provider);
+  }, [provider])
 
   const getENS = async () => {
     const wallet = ethers.Wallet.createRandom();

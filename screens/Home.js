@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from '@rneui/themed';
+import '@walletconnect/react-native-compat';
 import { WalletConnectModal, useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { providerMetadata, sessionParams } from '../utils/walletconnect';
@@ -62,7 +63,6 @@ export default function Home({ navigation }) {
       <WalletConnectModal
         projectId={WALLETCONNECT_PROJECTID}
         providerMetadata={providerMetadata}
-        sessionParams={sessionParams}
       />
       <StatusBar style="auto" />
     </View>
