@@ -6,7 +6,7 @@ import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-nat
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { initializingSuperfluid, getfDAIxBalance } from '../utils/superfluid';
+import { getfDAIxBalance, approveDAITokens } from '../utils/superfluid';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -28,16 +28,33 @@ export default function Dashboard({ navigation }) {
     const balance = await getfDAIxBalance(provider, address);
     setFdaixbalance(balance.toString());
   }
-
+  
   const getENS = async () => {
     const wallet = ethers.Wallet.createRandom();
     console.log('Wallet address:', wallet.address);
+  }
+
+  const approve = async () => {
+    await approveDAITokens(provider, "10");
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.address}>{address}</Text>
       <Text>{fdaixbalance} FDAI</Text>
+      <Button
+        title="Approve"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={approve}
+      />
       <Input 
         placeholder="Enter Address"
         value={input}
