@@ -6,7 +6,7 @@ import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-nat
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { getfDAIxBalance, approveDAITokens } from '../utils/superfluid';
+import { getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx } from '../utils/superfluid';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -38,6 +38,10 @@ export default function Dashboard({ navigation }) {
     await approveDAITokens(provider, "10");
   }
 
+  const updateToDAIx = async () => {
+    await upgradeDAIToDAIx(provider, "10");
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.address}>{address}</Text>
@@ -54,6 +58,19 @@ export default function Dashboard({ navigation }) {
           marginVertical: 10,
         }}
         onPress={approve}
+      />
+      <Button
+        title="Upgrade"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={updateToDAIx}
       />
       <Input 
         placeholder="Enter Address"
