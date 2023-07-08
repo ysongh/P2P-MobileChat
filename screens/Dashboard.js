@@ -6,7 +6,7 @@ import { Web3Modal, useWalletConnectModal } from '@walletconnect/modal-react-nat
 import { ethers } from 'ethers';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx } from '../utils/superfluid';
+import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx } from '../utils/superfluid';
 import { providerMetadata } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
@@ -14,6 +14,7 @@ export default function Dashboard({ navigation }) {
   const { address, provider } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
+  const [daiBalance, setDaiBalance] = useState(0);
   const [fdaixbalance, setFdaixbalance] = useState(0);
 
   useEffect(() => {
@@ -21,8 +22,16 @@ export default function Dashboard({ navigation }) {
   }, [])
 
   useEffect(() => {
-    if(provider) getfDAIx();
+    if(provider) {
+      getDAI();
+      getfDAIx();
+    }
   }, [provider])
+
+  const getDAI = async() => {
+    const balance = await getDAIBalance(provider, address);
+    setDaiBalance(balance.toString());
+  }
 
   const getfDAIx = async() => {
     const balance = await getfDAIxBalance(provider, address);
@@ -45,7 +54,8 @@ export default function Dashboard({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.address}>{address}</Text>
-      <Text>{fdaixbalance} FDAI</Text>
+      <Text>{daiBalance} DAI</Text>
+      <Text>{fdaixbalance} FDAIx</Text>
       <Button
         title="Approve"
         buttonStyle={{
