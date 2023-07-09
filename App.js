@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/Home';
 import DashboardScreen from './screens/Dashboard';
 import ChatScreen from './screens/Chat';
+import StreamScreen from './screens/Stream';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="Stream" component={StreamScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
