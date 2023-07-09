@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Button, Input, Text } from '@rneui/themed';
+import { Tab, TabView, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromPB } from '../utils/polybase';
@@ -10,6 +10,7 @@ import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx } fr
 export default function Stream({ navigation }) {
   const { address, provider } = useWalletConnectModal();
 
+  const [currentTab, setCurrentTab] = useState(0);
   const [input, setInput] = useState("");
   const [daiBalance, setDaiBalance] = useState(0);
   const [fdaixbalance, setFdaixbalance] = useState(0);
@@ -45,39 +46,65 @@ export default function Stream({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.address}>{address}</Text>
-      <Text>{daiBalance} DAI</Text>
-      <Text>{fdaixbalance} FDAIx</Text>
-      <Button
-        title="Approve"
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
+      <Tab
+        value={currentTab}
+        onChange={(e) => setCurrentTab(e)}
+        indicatorStyle={{
+          height: 3,
         }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={approve}
-      />
-      <Button
-        title="Upgrade"
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={updateToDAIx}
-      />
-      <Input 
+      >
+        <Tab.Item
+          title="Stream"
+          titleStyle={{ fontSize: 12 }}
+        />
+        <Tab.Item
+          title="Upgrade"
+          titleStyle={{ fontSize: 12 }}
+        />
+        <Tab.Item
+          title="Setting"
+          titleStyle={{ fontSize: 12 }}
+        />
+      </Tab>
+
+      {currentTab === 0 && <Input 
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
+      }
+
+      {currentTab === 1 && <>
+        <Text style={styles.address}>{address}</Text>
+        <Text>{daiBalance} DAI</Text>
+        <Text>{fdaixbalance} FDAIx</Text>
+        <Button
+          title="Approve"
+          buttonStyle={{
+            backgroundColor: 'rgba(78, 116, 289, 1)',
+            borderRadius: 3,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 50,
+            marginVertical: 10,
+          }}
+          onPress={approve}
+        />
+        <Button
+          title="Upgrade"
+          buttonStyle={{
+            backgroundColor: 'rgba(78, 116, 289, 1)',
+            borderRadius: 3,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 50,
+            marginVertical: 10,
+          }}
+          onPress={updateToDAIx}
+        />
+      </>
+      }
       <StatusBar style="auto" />
     </View>
   );
