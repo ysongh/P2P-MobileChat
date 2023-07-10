@@ -136,3 +136,35 @@ export const upgradeDAIToDAIx = async (p, amount) => {
     console.error(error);
   }
 }
+
+export const streamDAIx = async (p, from, to, flowRate) => {
+  const provider = new ethers.providers.Web3Provider(p);
+  const signer = provider.getSigner();
+
+  const sf = await initializingSuperfluid(p);
+  const superSigner = sf.createSigner({ signer: signer });
+
+  console.log(signer);
+  console.log(await superSigner.getAddress());
+  const daix = await sf.loadSuperToken("fDAIx");
+
+  console.log(daix);
+
+  try {
+    const createFlowOperation = sf.cfaV1.createFlow({
+      sender: from,
+      receiver: to,
+      flowRate: flowRate,
+      superToken: daix.address,
+    });
+
+    console.log("Creating your stream...");
+    console.log(createFlowOperation);
+
+    const result = await createFlowOperation.exec(signer);
+    console.log(result);
+    console.log(`See your stream at https://app.superfluid.finance/?view=${to}`);
+  } catch(error){
+    console.error(error);
+  }
+}

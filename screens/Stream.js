@@ -5,13 +5,14 @@ import { Tab, TabView, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx } from '../utils/superfluid';
+import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx, streamDAIx } from '../utils/superfluid';
 
 export default function Stream({ navigation }) {
   const { address, provider } = useWalletConnectModal();
 
   const [currentTab, setCurrentTab] = useState(0);
-  const [input, setInput] = useState("");
+  const [to, setTo] = useState("0xaa90e02e88047232288D01Fe04d846e8A4Cc88dd");
+  const [flowRate, setFlowRate] = useState(0);
   const [daiBalance, setDaiBalance] = useState(0);
   const [fdaixbalance, setFdaixbalance] = useState(0);
 
@@ -44,6 +45,17 @@ export default function Stream({ navigation }) {
     await upgradeDAIToDAIx(provider, "10");
   }
 
+  const stream = async() => {
+    try {
+      await streamDAIx(provider, address, to, flowRate);
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <View style={styles.container}>
       <Tab
@@ -67,10 +79,29 @@ export default function Stream({ navigation }) {
         />
       </Tab>
 
-      {currentTab === 0 && <Input 
-        placeholder="Enter Address"
-        value={input}
-        onChangeText={(text) => setInput(text)} />
+      {currentTab === 0 && <>
+        <Input 
+          placeholder="Enter Address"
+          value={to}
+          onChangeText={(text) => setTo(text)} />
+        <Input 
+          placeholder="Flow Rate"
+          value={flowRate}
+          onChangeText={(text) => setFlowRate(text)} />
+        <Button
+          title="Stream"
+          buttonStyle={{
+            backgroundColor: 'rgba(78, 116, 289, 1)',
+            borderRadius: 3,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: 50,
+            marginVertical: 10,
+          }}
+          onPress={stream}
+        />
+       </>
       }
 
       {currentTab === 1 && <>
