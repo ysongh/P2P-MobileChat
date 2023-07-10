@@ -5,7 +5,7 @@ import { Tab, TabView, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx, streamDAIx } from '../utils/superfluid';
+import { getDAIBalance, getfDAIxBalance, approveDAITokens, upgradeDAIToDAIx, streamDAIx, calculateFlowRate } from '../utils/superfluid';
 
 export default function Stream({ navigation }) {
   const { address, provider } = useWalletConnectModal();
@@ -13,6 +13,7 @@ export default function Stream({ navigation }) {
   const [currentTab, setCurrentTab] = useState(0);
   const [to, setTo] = useState("0xaa90e02e88047232288D01Fe04d846e8A4Cc88dd");
   const [flowRate, setFlowRate] = useState(0);
+  const [flowRateDisplay, setFlowRateDisplay] = useState("")
   const [daiBalance, setDaiBalance] = useState(0);
   const [fdaixbalance, setFdaixbalance] = useState(0);
 
@@ -55,6 +56,13 @@ export default function Stream({ navigation }) {
     }
   }
 
+  const handleFlowRateChange = (value) => {
+    setFlowRate(value);
+    const newFlowRateDisplay = calculateFlowRate(value);
+    if(newFlowRateDisplay) {
+      setFlowRateDisplay(newFlowRateDisplay.toString())
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -87,7 +95,8 @@ export default function Stream({ navigation }) {
         <Input 
           placeholder="Flow Rate"
           value={flowRate}
-          onChangeText={(text) => setFlowRate(text)} />
+          onChangeText={(text) => handleFlowRateChange(text)} />
+        {flowRateDisplay && <Text>{flowRateDisplay} / Month</Text>}
         <Button
           title="Stream"
           buttonStyle={{
