@@ -10,6 +10,7 @@ export default function Upgrade() {
 
   const [daiBalance, setDaiBalance] = useState(0);
   const [fdaixbalance, setFdaixbalance] = useState(0);
+  const [amount, setAmount] = useState("");
 
   useEffect(() => {
     if(provider) {
@@ -29,11 +30,11 @@ export default function Upgrade() {
   }
 
   const approve = async () => {
-    await approveDAITokens(provider, "10");
+    await approveDAITokens(provider, amount);
   }
 
   const updateToDAIx = async () => {
-    await upgradeDAIToDAIx(provider, "10");
+    await upgradeDAIToDAIx(provider, amount);
   }
 
   return (
@@ -41,6 +42,10 @@ export default function Upgrade() {
       <Text style={styles.address}>{address}</Text>
       <Text>{daiBalance} DAI</Text>
       <Text>{fdaixbalance} FDAIx</Text>
+      <Input 
+        placeholder="Enter amount"
+        value={amount}
+        onChangeText={(text) => setAmount(text)} />
       <Button
         title="Approve"
         buttonStyle={{
