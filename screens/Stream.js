@@ -26,10 +26,6 @@ export default function Stream() {
           title="Upgrade"
           titleStyle={{ fontSize: 12 }}
         />
-        <Tab.Item
-          title="Setting"
-          titleStyle={{ fontSize: 12 }}
-        />
       </Tab>
 
       {currentTab === 0 && <StreamSection />}
