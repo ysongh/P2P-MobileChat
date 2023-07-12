@@ -1,7 +1,7 @@
 import {  useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Tab } from '@rneui/themed';
+import { Tab, Divider } from '@rneui/themed';
 
 import StreamSection from '../components/stream/Stream';
 import Upgrade from '../components/stream/Upgrade';
@@ -27,6 +27,8 @@ export default function Stream() {
           titleStyle={{ fontSize: 12 }}
         />
       </Tab>
+
+      <Divider width={20} />
 
       {currentTab === 0 && <StreamSection />}
       {currentTab === 1 && <Upgrade /> }
