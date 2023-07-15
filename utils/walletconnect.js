@@ -1,5 +1,5 @@
 export const providerMetadata = {
-  name: 'YOUR_PROJECT_NAME',
+  name: 'P2P MobileChat',
   description: 'YOUR_PROJECT_DESCRIPTION',
   url: 'https://your-project-website.com/',
   icons: ['https://your-project-logo.com/'],
