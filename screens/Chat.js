@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
-import { Avatar, Text } from '@rneui/themed';
+import { Avatar, Text, Icon } from '@rneui/themed';
 
 import { addChatToPB, db } from '../utils/polybase';
 import { dateToUnixTime } from '../utils/date';
@@ -85,7 +85,7 @@ export default function Chat({ route }) {
           <View style={styles.footer}>
             <TextInput style={styles.textInput} value={input} onChangeText={(text) => setInput(text)} placeholder="msg..." />
             <TouchableOpacity onPress={sendMessage}>
-              <Text>Send</Text>
+              <Icon name='send' />
             </TouchableOpacity>
           </View>
         </>
