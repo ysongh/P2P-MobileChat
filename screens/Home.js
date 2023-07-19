@@ -34,19 +34,6 @@ export default function Home({ navigation }) {
       >
         Welcome to P2P MobileChat
       </Text>
-      <Button
-        title={isConnected ? 'Logout' : 'Connect'}
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={logout}
-      />
        <Button
         title="Dashboard"
         buttonStyle={{
@@ -59,6 +46,19 @@ export default function Home({ navigation }) {
           marginVertical: 10,
         }}
         onPress={() => navigation.navigate("Dashboard")}
+      />
+      <Button
+        title={isConnected ? 'Logout' : 'Connect'}
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={logout}
       />
       <WalletConnectModal
         projectId={WALLETCONNECT_PROJECTID}
