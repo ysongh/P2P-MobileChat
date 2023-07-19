@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Button, Input, Text } from '@rneui/themed';
+import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromPB } from '../utils/polybase';
@@ -16,8 +16,25 @@ export default function Dashboard({ navigation }) {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.address}>{address}</Text>
+      <ListItem>
+        <Avatar
+          rounded
+          size={30}
+          title="CJ"
+          containerStyle={{
+            backgroundColor: "green"
+          }} />
+        <ListItem.Content>
+          <ListItem.Title style={{ fontWeight: "800" }}>
+            0x0
+          </ListItem.Title>
+          <ListItem.Subtitle>
+            Testing...
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
       <Input 
         placeholder="Enter Address"
         value={input}
