@@ -18,7 +18,7 @@ export default function Dashboard({ navigation }) {
   return (
     <View>
       <Text style={styles.address}>{address}</Text>
-      <ListItem>
+      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )}>
         <Avatar
           rounded
           size={30}
@@ -35,36 +35,28 @@ export default function Dashboard({ navigation }) {
           </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
+      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )}>
+        <Avatar
+          rounded
+          size={30}
+          title="FC"
+          containerStyle={{
+            backgroundColor: "blue"
+          }} />
+        <ListItem.Content>
+          <ListItem.Title style={{ fontWeight: "800" }}>
+            0x1
+          </ListItem.Title>
+          <ListItem.Subtitle>
+           Hi
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
       <Input 
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
-      <Button
-        title="Chat 0x0"
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )}
-      />
-      <Button
-        title="Chat 0x1"
-        buttonStyle={{
-          backgroundColor: 'rgba(78, 116, 289, 1)',
-          borderRadius: 3,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )}
-      />
+      
        <Button
         title="Stream"
         buttonStyle={{
