@@ -18,7 +18,7 @@ export default function Dashboard({ navigation }) {
   return (
     <View>
       <Text style={styles.address}>{address}</Text>
-      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )}>
+      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
         <Avatar
           rounded
           size={30}
@@ -35,7 +35,7 @@ export default function Dashboard({ navigation }) {
           </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
-      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )}>
+      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )} bottomDivider>
         <Avatar
           rounded
           size={30}
