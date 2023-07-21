@@ -9,7 +9,7 @@ import { providerMetadata, sessionParams } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
 
 export default function Home({ navigation }) {
-  const { open, provider, isConnected } = useWalletConnectModal();
+  const { open, address, provider, isConnected } = useWalletConnectModal();
 
   useEffect(() => {
     if (isConnected) navigation.navigate('Dashboard');
@@ -34,6 +34,7 @@ export default function Home({ navigation }) {
       >
         Welcome to P2P MobileChat
       </Text>
+      <Text style={styles.address}>{address}</Text>
        <Button
         title="Dashboard"
         buttonStyle={{

@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
-import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromPB } from '../utils/polybase';
 
 export default function Dashboard({ navigation }) {
-  const { address } = useWalletConnectModal();
-
   const [input, setInput] = useState("");
 
   useEffect(() => {
@@ -17,7 +14,6 @@ export default function Dashboard({ navigation }) {
 
   return (
     <View>
-      <Text style={styles.address}>{address}</Text>
       <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
         <Avatar
           rounded
@@ -80,9 +76,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  address: {
-    marginTop: 15,
-    marginBottom: 20
   }
 });
