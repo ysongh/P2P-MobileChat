@@ -48,6 +48,7 @@ export default function Dashboard({ navigation }) {
           </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
+      <Text style={styles.label}>Search by Address</Text>
       <Input 
         placeholder="Enter Address"
         value={input}
@@ -76,5 +77,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  label: {
+    marginTop: 10,
+    marginLeft: 10,
+    fontSize: 20,
+    fontWeight: "bold"
   }
 });
