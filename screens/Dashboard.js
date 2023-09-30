@@ -54,14 +54,14 @@ export default function Dashboard({ navigation }) {
         value={input}
         onChangeText={(text) => setInput(text)} />
       
-       <Button
+      <Button
         title="Stream"
         buttonStyle={{
           backgroundColor: 'rgba(78, 116, 289, 1)',
           borderRadius: 3,
         }}
         containerStyle={{
-          width: 200,
+          width: 310,
           marginHorizontal: 50,
           marginVertical: 10,
         }}
