@@ -35,7 +35,7 @@ export default function Home({ navigation }) {
         Welcome to P2P MobileChat
       </Text>
       <Text style={styles.address}>{address}</Text>
-       <Button
+      {isConnected && <Button
         title="Dashboard"
         buttonStyle={{
           backgroundColor: 'rgba(78, 116, 289, 1)',
@@ -47,7 +47,7 @@ export default function Home({ navigation }) {
           marginVertical: 10,
         }}
         onPress={() => navigation.navigate("Dashboard")}
-      />
+      />}
       <Button
         title={isConnected ? 'Logout' : 'Connect'}
         buttonStyle={{
