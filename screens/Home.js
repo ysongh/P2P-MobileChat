@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Button, Text } from '@rneui/themed';
+import { Button, Header, Text } from '@rneui/themed';
 import '@walletconnect/react-native-compat';
 import { WalletConnectModal, useWalletConnectModal } from '@walletconnect/modal-react-native';
 
@@ -11,9 +11,9 @@ import { WALLETCONNECT_PROJECTID } from '../keys';
 export default function Home({ navigation }) {
   const { open, address, provider, isConnected } = useWalletConnectModal();
 
-  useEffect(() => {
-    if (isConnected) navigation.navigate('Dashboard');
-  }, [isConnected])
+  // useEffect(() => {
+  //   if (isConnected) navigation.navigate('Dashboard');
+  // }, [isConnected])
 
   const logout = async () => {
     if (isConnected) {
@@ -25,14 +25,18 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Text
-        h1Style={{}}
-        h2Style={{}}
-        h3Style={{}}
-        h4
-        h4Style={{}}
+        h1Style={{ fontWeight: "bold" }}
+        h1
+        style={{ marginBottom: 5}}
+      >
+        Welcome to
+      </Text>
+      <Text
+        h2Style={{ fontWeight: "bold" }}
+        h2
         style={{ marginBottom: 20}}
       >
-        Welcome to P2P MobileChat
+        P2P MobileChat
       </Text>
       <Text style={styles.address}>{address}</Text>
       {isConnected && <Button
