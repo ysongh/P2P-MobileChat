@@ -4,7 +4,7 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, V
 import { Avatar, Text, Icon } from '@rneui/themed';
 
 import { addChatToPB, db } from '../utils/polybase';
-import { getChatsFromFirebase } from '../utils/firebase';
+import { getChatsFromFirebase, addChatToFirebase } from '../utils/firebase';
 import { dateToUnixTime } from '../utils/date';
 
 export default function Chat({ route }) {
@@ -14,17 +14,19 @@ export default function Chat({ route }) {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const getChats = async () => {
-      const chats = await getChatsFromFirebase();
-      setMessages(chats)
-    }
     getChats();
-  }, [])
+  }, []);
+
+  const getChats = async () => {
+    const chats = await getChatsFromFirebase();
+    setMessages(chats)
+  }
 
   const sendMessage = async() => {
     Keyboard.dismiss();
     const currentTime = await dateToUnixTime();
-    addChatToPB(currentTime.toString(), reciever, sender, input);
+    await addChatToFirebase(reciever, sender, input);
+    getChats();
     setInput("");
   }
 

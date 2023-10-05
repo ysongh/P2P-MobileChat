@@ -10,3 +10,7 @@ export const getChatsFromFirebase = async () => {
   console.log(chats);
   return chats;
 }
+
+export const addChatToFirebase = async (reciever, sender, input) => {
+  await addDoc(chatCollectionRef, { from: reciever, to: sender, text: input });
+}
