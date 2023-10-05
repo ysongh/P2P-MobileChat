@@ -4,14 +4,14 @@ import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 
 import { getChatsFromPB } from '../utils/polybase';
-import { getChats } from '../utils/firebase';
+import { getChatsFromFirebase } from '../utils/firebase';
 
 export default function Dashboard({ navigation }) {
   const [input, setInput] = useState("");
 
   useEffect(() => {
     getChatsFromPB();
-    getChats();
+    getChatsFromFirebase();
   }, [])
 
   return (

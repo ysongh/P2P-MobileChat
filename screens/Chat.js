@@ -4,6 +4,7 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, V
 import { Avatar, Text, Icon } from '@rneui/themed';
 
 import { addChatToPB, db } from '../utils/polybase';
+import { getChatsFromFirebase } from '../utils/firebase';
 import { dateToUnixTime } from '../utils/date';
 
 export default function Chat({ route }) {
@@ -13,18 +14,11 @@ export default function Chat({ route }) {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    db
-      .collection("Chat")
-      .onSnapshot(
-        (newDoc) => {
-          // Handle the change
-          setMessages(newDoc.data);
-        },
-        (err) => {
-          // Optional error handler
-          console.error(err);
-        }
-      );
+    const getChats = async () => {
+      const chats = await getChatsFromFirebase();
+      setMessages(chats)
+    }
+    getChats();
   }, [])
 
   const sendMessage = async() => {
@@ -46,8 +40,8 @@ export default function Chat({ route }) {
         <>
           <ScrollView contentContainerStyle={{ paddingTop: 15 }}>
             {messages.map(m => (
-              m.data.from === "0x0"
-                ? <View style={styles.reciever} key={m.data.id}>
+              m.from === "0x0"
+                ? <View style={styles.reciever} key={m.id}>
                     <Avatar
                       rounded
                       position="absolute"
@@ -61,9 +55,9 @@ export default function Chat({ route }) {
                         right: -5,
                         backgroundColor: "green"
                       }} />
-                    <Text style={styles.recieverText}>{m.data.text}</Text>
+                    <Text style={styles.recieverText}>{m.text}</Text>
                   </View>
-                : <View style={styles.sender} key={m.data.id}>
+                : <View style={styles.sender} key={m.id}>
                     <Avatar
                       rounded
                       position="absolute"
@@ -77,7 +71,7 @@ export default function Chat({ route }) {
                         left: -5,
                         backgroundColor: "blue"
                       }} />
-                    <Text style={styles.senderText}>{m.data.text}</Text>
+                    <Text style={styles.senderText}>{m.text}</Text>
                     <Text style={styles.senderName}>0x0</Text>
                   </View>
             ))}
