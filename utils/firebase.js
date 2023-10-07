@@ -5,11 +5,20 @@ import { db } from "../firebase"
 const chatCollectionRef = collection(db, "chat");
 
 export const getChatsFromFirebase = async () => {
-  const data = await getDocs(chatCollectionRef);
-  let chats = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  return chats;
+  try {
+    const data = await getDocs(chatCollectionRef);    
+    const chats = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    return chats;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export const addChatToFirebase = async (reciever, sender, input, currentTime) => {
-  await addDoc(chatCollectionRef, { from: reciever, to: sender, text: input, date: currentTime });
+  try {
+    await addDoc(chatCollectionRef, { from: reciever, to: sender, text: input, date: currentTime });
+  } catch (error) {
+    console.error(error);
+  }
 }
