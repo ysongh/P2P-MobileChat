@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { Avatar, Text, Icon } from '@rneui/themed';
 
-import { addChatToPB, db } from '../utils/polybase';
+// import { addChatToPB, db } from '../utils/polybase';
 import { getChatsFromFirebase, addChatToFirebase } from '../utils/firebase';
 import { dateToUnixTime } from '../utils/date';
 
@@ -25,7 +25,7 @@ export default function Chat({ route }) {
   const sendMessage = async() => {
     Keyboard.dismiss();
     const currentTime = await dateToUnixTime();
-    await addChatToFirebase(reciever, sender, input);
+    await addChatToFirebase(reciever, sender, input, currentTime);
     getChats();
     setInput("");
   }
