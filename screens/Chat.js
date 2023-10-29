@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import { Avatar, Text, Icon } from '@rneui/themed';
-
-// import { addChatToPB, db } from '../utils/polybase';
 import { getChatsFromFirebase, addChatToFirebase } from '../utils/firebase';
 import { dateToUnixTime } from '../utils/date';
 
