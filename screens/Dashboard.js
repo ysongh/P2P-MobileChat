@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
@@ -7,6 +7,12 @@ import { getChatsFromFirebase } from '../utils/firebase';
 
 export default function Dashboard({ navigation }) {
   const [input, setInput] = useState("");
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: { backgroundColor: "#80e5ff"}
+    })
+  }, [])
 
   useEffect(() => {
     getChatsFromFirebase();
