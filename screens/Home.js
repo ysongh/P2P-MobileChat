@@ -11,9 +11,9 @@ import { WALLETCONNECT_PROJECTID } from '../keys';
 export default function Home({ navigation }) {
   const { open, address, provider, isConnected } = useWalletConnectModal();
 
-  // useEffect(() => {
-  //   if (isConnected) navigation.navigate('Dashboard');
-  // }, [isConnected])
+  useEffect(() => {
+    if (isConnected) navigation.navigate('Dashboard');
+  }, [isConnected])
 
   const logout = async () => {
     if (isConnected) {

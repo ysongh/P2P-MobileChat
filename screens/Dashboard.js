@@ -2,15 +2,43 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
+import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 
 import { getChatsFromFirebase } from '../utils/firebase';
 
 export default function Dashboard({ navigation }) {
+  const { open, provider, isConnected } = useWalletConnectModal();
+
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    if (!isConnected) navigation.navigate('Home');
+  }, [isConnected])
+
+  const logout = async () => {
+    if (isConnected) {
+      return provider?.disconnect();
+    }
+    return open();
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: { backgroundColor: "#80e5ff"}
+      headerStyle: { backgroundColor: "#80e5ff"},
+      headerRight: () => (
+        <View>
+          <Button
+            title={isConnected ? 'Logout' : 'Connect'}
+            buttonStyle={{
+              backgroundColor: 'rgba(78, 116, 289, 1)',
+              borderRadius: 3,
+            }}
+            containerStyle={{
+            }}
+            onPress={logout}
+          />
+        </View>
+      )
     })
   }, [])
 
