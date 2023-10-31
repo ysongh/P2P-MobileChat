@@ -42,6 +42,11 @@ export default function Dashboard({ navigation }) {
 
   return (
     <View>
+      <Text style={styles.label}>Search by Address</Text>
+      <Input 
+        placeholder="Enter Address"
+        value={input}
+        onChangeText={(text) => setInput(text)} />
       <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
         <Avatar
           rounded
@@ -76,11 +81,6 @@ export default function Dashboard({ navigation }) {
           </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
-      <Text style={styles.label}>Search by Address</Text>
-      <Input 
-        placeholder="Enter Address"
-        value={input}
-        onChangeText={(text) => setInput(text)} />
       
       <Button
         title="Stream"
