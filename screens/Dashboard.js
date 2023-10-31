@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { getChatsFromFirebase } from '../utils/firebase';
 
@@ -27,16 +28,9 @@ export default function Dashboard({ navigation }) {
       headerStyle: { backgroundColor: "#80e5ff"},
       headerRight: () => (
         <View>
-          <Button
-            title={isConnected ? 'Logout' : 'Connect'}
-            buttonStyle={{
-              backgroundColor: 'rgba(78, 116, 289, 1)',
-              borderRadius: 3,
-            }}
-            containerStyle={{
-            }}
-            onPress={logout}
-          />
+          <TouchableOpacity activeOpacity={0.5} onPress={logout}>
+            <MaterialIcons name="logout" size={30} color="red" />
+          </TouchableOpacity>
         </View>
       )
     })
