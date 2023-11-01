@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { getChatsFromFirebase } from '../utils/firebase';
 
@@ -27,14 +27,24 @@ export default function Dashboard({ navigation }) {
     navigation.setOptions({
       headerStyle: { backgroundColor: "#80e5ff"},
       headerRight: () => (
-        <View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: 80,
+            marginRight: 5
+          }}
+        >
+          <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("AddChat")}>
+            <MaterialCommunityIcons name="lead-pencil" size={30} color="blue" />
+          </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} onPress={logout}>
             <MaterialIcons name="logout" size={30} color="red" />
           </TouchableOpacity>
         </View>
       )
     })
-  }, [])
+  }, [navigation])
 
   useEffect(() => {
     getChatsFromFirebase();
