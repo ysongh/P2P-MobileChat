@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Input } from '@rneui/themed';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const AddChat = ({ navigation }) => {
   const [input, setInput] = useState("");
@@ -17,7 +18,10 @@ const AddChat = ({ navigation }) => {
       <Input
         placeholder='Enter a chat name'
         value={input}
-        onChange={(text) => setInput(text)} />
+        onChange={(text) => setInput(text)}
+        leftIcon={
+          <MaterialCommunityIcons name="chat-processing" size={24} color="black" />
+        } />
     </View>
   );
 };
