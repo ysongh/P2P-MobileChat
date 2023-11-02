@@ -1,7 +1,9 @@
 import { useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Input } from '@rneui/themed';
+import { Button, Input } from '@rneui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
+import { createChatRoomToFirebase } from '../utils/firebase';
 
 const AddChat = ({ navigation }) => {
   const [input, setInput] = useState("");
@@ -10,7 +12,12 @@ const AddChat = ({ navigation }) => {
     navigation.setOptions({
       headerStyle: { backgroundColor: "#80e5ff"},
     })
-  }, [navigation])
+  }, [navigation]);
+  
+  const createChat = async () => {
+    await createChatRoomToFirebase(input);
+    navigation.goBack();
+  }
 
   return (
     <View>
@@ -22,6 +29,7 @@ const AddChat = ({ navigation }) => {
         leftIcon={
           <MaterialCommunityIcons name="chat-processing" size={24} color="black" />
         } />
+      <Button onPress={createChat} title="Create new chat" />
     </View>
   );
 };

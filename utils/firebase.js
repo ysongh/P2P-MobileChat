@@ -3,6 +3,7 @@ import { collection, doc, updateDoc, getDocs, addDoc } from 'firebase/firestore'
 import { db } from "../firebase"
 
 const chatCollectionRef = collection(db, "chat");
+const chatsCollectionRef = collection(db, "chats");
 
 export const getChatsFromFirebase = async () => {
   try {
@@ -12,6 +13,14 @@ export const getChatsFromFirebase = async () => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+export const createChatRoomToFirebase = async (input) => {
+  try {
+    await addDoc(chatsCollectionRef, { text: input });
+  } catch (error) {
+    console.error(error);
   }
 }
 
