@@ -18,7 +18,7 @@ const AddChat = ({ navigation }) => {
       <Input
         placeholder='Enter a chat name'
         value={input}
-        onChange={(text) => setInput(text)}
+        onChangeText={(text) => setInput(text)}
         leftIcon={
           <MaterialCommunityIcons name="chat-processing" size={24} color="black" />
         } />
