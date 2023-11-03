@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { Button, Header, Text } from '@rneui/themed';
@@ -7,13 +7,26 @@ import { WalletConnectModal, useWalletConnectModal } from '@walletconnect/modal-
 
 import { providerMetadata, sessionParams } from '../utils/walletconnect';
 import { WALLETCONNECT_PROJECTID } from '../keys';
+import { getChatRoomsFromFirebase } from '../utils/firebase';
 
 export default function Home({ navigation }) {
   const { open, address, provider, isConnected } = useWalletConnectModal();
 
+  const [chats, setChats] = useState([]);
+
   useEffect(() => {
     if (isConnected) navigation.navigate('Dashboard');
   }, [isConnected])
+
+  useEffect(() => {
+    getChatrooms();
+  }, [])
+
+  const getChatrooms = async () => {
+    const chatrooms = await getChatRoomsFromFirebase();
+    setChats(chatrooms);
+    console.log(chatrooms);
+  }
 
   const logout = async () => {
     if (isConnected) {

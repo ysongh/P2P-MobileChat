@@ -16,6 +16,18 @@ export const getChatsFromFirebase = async () => {
   }
 }
 
+export const getChatRoomsFromFirebase = async () => {
+  try {
+    const data = await getDocs(chatsCollectionRef);    
+    const chatrooms = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    return chatrooms;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+
 export const createChatRoomToFirebase = async (input) => {
   try {
     await addDoc(chatsCollectionRef, { text: input });
