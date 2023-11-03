@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from '@rneui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
@@ -20,8 +20,7 @@ const AddChat = ({ navigation }) => {
   }
 
   return (
-    <View>
-      <Text>Add Chat</Text>
+    <View style={styles.container}>
       <Input
         placeholder='Enter a chat name'
         value={input}
@@ -36,4 +35,10 @@ const AddChat = ({ navigation }) => {
 
 export default AddChat;
 
-const style = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    padding: 30,
+    height: "100%",
+  },
+});
