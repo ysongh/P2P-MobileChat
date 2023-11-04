@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
 import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -64,26 +64,27 @@ export default function Dashboard({ navigation }) {
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
-      {chatRooms.map(c => (
-         <ListItem key={c.id} onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
-          <Avatar
-            rounded
-            size={30}
-            title="CJ"
-            containerStyle={{
-              backgroundColor: "green"
-            }} />
-          <ListItem.Content>
-            <ListItem.Title style={{ fontWeight: "800" }}>
-              {c.id}
-            </ListItem.Title>
-            <ListItem.Subtitle>
-              {c.text}
-            </ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-      ))}
-      
+      <ScrollView>
+        {chatRooms.map(c => (
+          <ListItem key={c.id} onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
+            <Avatar
+              rounded
+              size={30}
+              title="CJ"
+              containerStyle={{
+                backgroundColor: "green"
+              }} />
+            <ListItem.Content>
+              <ListItem.Title style={{ fontWeight: "800" }}>
+                {c.id}
+              </ListItem.Title>
+              <ListItem.Subtitle>
+                {c.text}
+              </ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </ScrollView>
       <Button
         title="Stream"
         buttonStyle={{
