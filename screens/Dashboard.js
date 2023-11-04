@@ -5,12 +5,13 @@ import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { getChatsFromFirebase } from '../utils/firebase';
+import { getChatRoomsFromFirebase } from '../utils/firebase';
 
 export default function Dashboard({ navigation }) {
   const { open, provider, isConnected } = useWalletConnectModal();
 
   const [input, setInput] = useState("");
+  const [chatRooms, setChatRooms] = useState([]);
 
   useEffect(() => {
     if (!isConnected) navigation.navigate('Home');
@@ -47,8 +48,14 @@ export default function Dashboard({ navigation }) {
   }, [navigation])
 
   useEffect(() => {
-    getChatsFromFirebase();
+    getChatrooms();
   }, [])
+
+  const getChatrooms = async () => {
+    const chatrooms = await getChatRoomsFromFirebase();
+    setChatRooms(chatrooms);
+    console.log(chatrooms);
+  }
 
   return (
     <View>
@@ -57,40 +64,25 @@ export default function Dashboard({ navigation }) {
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
-      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
-        <Avatar
-          rounded
-          size={30}
-          title="CJ"
-          containerStyle={{
-            backgroundColor: "green"
-          }} />
-        <ListItem.Content>
-          <ListItem.Title style={{ fontWeight: "800" }}>
-            0x0
-          </ListItem.Title>
-          <ListItem.Subtitle>
-            Testing...
-          </ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem onPress={() => navigation.navigate('Chat', {reciever: "0x1", sender: "0x0"} )} bottomDivider>
-        <Avatar
-          rounded
-          size={30}
-          title="FC"
-          containerStyle={{
-            backgroundColor: "blue"
-          }} />
-        <ListItem.Content>
-          <ListItem.Title style={{ fontWeight: "800" }}>
-            0x1
-          </ListItem.Title>
-          <ListItem.Subtitle>
-           Hi
-          </ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
+      {chatRooms.map(c => (
+         <ListItem key={c.id} onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
+          <Avatar
+            rounded
+            size={30}
+            title="CJ"
+            containerStyle={{
+              backgroundColor: "green"
+            }} />
+          <ListItem.Content>
+            <ListItem.Title style={{ fontWeight: "800" }}>
+              {c.id}
+            </ListItem.Title>
+            <ListItem.Subtitle>
+              {c.text}
+            </ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
+      ))}
       
       <Button
         title="Stream"
