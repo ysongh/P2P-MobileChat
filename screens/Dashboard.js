@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
-import { ListItem, Avatar, Button, Input, Text } from '@rneui/themed';
+import { Button, Input, Text } from '@rneui/themed';
 import { useWalletConnectModal } from '@walletconnect/modal-react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { getChatRoomsFromFirebase } from '../utils/firebase';
-
+import ChatListItem from '../components/ChatListItem';
 export default function Dashboard({ navigation }) {
   const { open, provider, isConnected } = useWalletConnectModal();
 
@@ -66,23 +66,7 @@ export default function Dashboard({ navigation }) {
         onChangeText={(text) => setInput(text)} />
       <ScrollView style={{ height: "100%" }}>
         {chatRooms.map(c => (
-          <ListItem key={c.id} onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
-            <Avatar
-              rounded
-              size={30}
-              title="CJ"
-              containerStyle={{
-                backgroundColor: "green"
-              }} />
-            <ListItem.Content>
-              <ListItem.Title style={{ fontWeight: "800" }}>
-                {c.id}
-              </ListItem.Title>
-              <ListItem.Subtitle>
-                {c.text}
-              </ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
+          <ChatListItem key={c.id} id={c.id} text={c.text} navigation={navigation} />
         ))}
       </ScrollView>
       <Button
