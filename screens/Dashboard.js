@@ -64,7 +64,7 @@ export default function Dashboard({ navigation }) {
         placeholder="Enter Address"
         value={input}
         onChangeText={(text) => setInput(text)} />
-      <ScrollView>
+      <ScrollView style={{ height: "100%" }}>
         {chatRooms.map(c => (
           <ListItem key={c.id} onPress={() => navigation.navigate('Chat', {reciever: "0x0", sender: "0x1"} )} bottomDivider>
             <Avatar
